@@ -508,7 +508,8 @@ OFPFW_NW_DST_MASK      = 1032192
 # Otherwise, packets are not being matched as they should
 OFPFW_ALL              = ((1 << 22) - 1)
 
-NO_BUFFER = 4294967295
+#NO_BUFFER = 4294967295
+NO_BUFFER = 65536
 
 # ----------------------------------------------------------------------
 
@@ -3524,7 +3525,8 @@ class ofp_packet_out (ofp_header):
 
     if self.data is not None:
       return b''.join((ofp_header.pack(self),
-        struct.pack("!LHH", self._buffer_id, self.in_port, actions_len),
+        struct.pack("!LHH", 4294967295, self.in_port, actions_len),
+#        struct.pack("!LHH", self._buffer_id, self.in_port, actions_len),
         actions, self.data))
     else:
       return b''.join((ofp_header.pack(self),
